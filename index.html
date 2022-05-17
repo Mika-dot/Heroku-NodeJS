@@ -1,64 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-    <title>Node.js</title>
-    <meta charset="utf-8" />
+  <meta charset="UTF-8">
+  <title>Map</title>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Map 8</title><link rel="stylesheet" href="website/Styles/map creation/style.css">
+
 </head>
 <body>
-    <h1>Cover</h1>
-
-    <form method="POST" action="/cover-download" enctype="multipart/form-data">
-        <div>
-            <input type="text" name="CardName">
-            <input type="text" name="Description">
-            <label>Choose a cover image:</label>
-            <input type="file" name="Cover" />
-
-        </div>
-        <div>
-            <input type="submit" name="btn_upload_cover_photo" value="Upload" />
-        </div>
-    </form>
-	
-	<h1>MODELS</h1>
-
-    <form method="POST" action="/Model-download" enctype="multipart/form-data">
-        <div>
-            <labelChoose models:</label>
-            <input type="file" name="Model" multiple/>
-        </div>
-        <div>
-            <input type="submit" name="btn_upload_cover_model" value="Upload" />
-        </div>
-    </form>
-	
-	<h1>Description</h1>
-
-    <form method="POST" action="/Body-download" enctype="multipart/form-data">
-        <div>
-            <input type="text" name="Foreword">
-            <input type="text" name="DescriptionInstructions">
-			<input type="text" name="Postscript">
-            <label>Select your profile picture:</label>
-            <input type="file" name="Body" multiple/>
+<!-- partial:index.partial.html -->
+<body>
+  <section>
+    <div class="container">
+      <div class="user signinBx">
+        <div class="imgBx"><img src="website/picture/Cards/Cards/Flying Bear Ghost 5.png" alt="" /></div>
+        <div class="formBx">
+          <form  method="POST" action="/cover-download" enctype="multipart/form-data" onsubmit="return false;">
+            <h2>Cover</h2>
+                <div>
+                    <input type="text" name="CardName" >
+                    <input type="text" name="Description" >
+                    <label>Choose a cover image:</label>
+                    <input type="file" name="Cover" />
+        
+                </div>
+                <div>
+                    <input type="submit" name="btn_upload_cover_photo" value="Upload" />
+                </div>
+                <p class="signup">
+                    continue filling in the fields
+                    <a href="#" onclick="toggleForm();">body</a>
+                  </p>
+          </form>
 
         </div>
-        <div>
-            <input type="submit" name="btn_upload_cover_body" value="Upload" />
+      </div>
+      <div class="user signupBx">
+        <div class="formBx">
+
+                        
+          <form  method="POST" action="/Model-download" enctype="multipart/form-data" onsubmit="return false;">
+            <div>
+                <label> models:</label>
+                <input type="file" name="Model" multiple/>
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_cover_model" value="Upload" />
+            </div>
+          </form>
+
+          <form  method="POST" action="/Body-download" enctype="multipart/form-data" onsubmit="return false;">
+            <div>
+                <input type="text" name="Foreword">
+                <input type="text" name="DescriptionInstructions">
+                <input type="text" name="Postscript">
+                <label>Select your profile picture:</label>
+                <input type="file" name="Body" multiple/>
+    
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_cover_body" value="Upload" />
+            </div>
+                <p class="signup">
+                    back to cover
+                    <a href="#" onclick="toggleForm();">cover</a>
+                  </p>
+          </form>
+
+
         </div>
-    </form>
-	
-<!--
-    <form method="POST" action="/upload-multiple-images" enctype="multipart/form-data">
-        <div>           
-            <label>Select multiple images:</label>
-            <input type="file" name="multiple_images" multiple />  <!--multiple позволяет загружать много изображений
-        </div>
-        <div>
-            <input type="submit" name="btn_upload_multiple_images" value="Upload" />
-        </div>
-    </form>
-      -->
+        <div class="imgBx"><img src="img/1 (1).jpg" alt="" /></div>
+      </div>
+    </div>
+  </section>
+</body>
+<!-- partial -->
+  <script  src="website/Code/map creation/script.js"></script>
 
 </body>
-<html>
+</html>
