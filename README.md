@@ -1,44 +1,49 @@
-﻿**Hello, this repository was created for the purpose of completing an assignment on the subject “Web”.**
+# Лабораторная работа №6
 
-**Directory structure**
+Знакомство с Node.JS
 
-The task was to deploy applications based on herokuapp. The site should include the following aspects.Страницу регистрации / входа
+**Цель**: изучить основы работы с Node и npm.
 
-- Main page of the site*Она должна включать.*
-  - Search engine
-  - Filters for maps
-    - *Custom Article Cards.*
-    - Context with a short description
-    - Picture
-    - Full name of the author
-- Personal Area
-  - Similar to the “Main Page” except for automatic filtering by the author of the account owner.
-  - Ability to create new maps.
-  - Ability to change existing
-- Card Page
-  - *It should include.*
-  - Pictures
-  - Text “main”
-  - Author
-  - Etc
+## Содержание и порядок выполнения лабораторной работы:
 
-**Project Description**
+1. Установить NodeJS с https://nodejs.org/ru/.
 
-Buildings under the teacher in the course “Web and DB”. It pursues the goal of studying the principles of operation of sites similar to
+1. Изучить npm и его основных команд: ```init```, ```install```, ```run```
 
-1. [instructables](https://www.instructables.com/)
-1. [thingiverse](https://www.thingiverse.com/)
-1. [grabcad](https://grabcad.com/library)
+1. Изучить объектов node: global, process.
 
-|![Instructables](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.001.png)|![Thingiverse - Apps on Google Play](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.002.png)|![GrabCAD - Wikipedia](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.003.jpeg)|
-| :-: | :-: | :-: |
+1. Изучить модулей node: http, url.
 
-**About the author**
+1. Изучить функции node: require.
 
-**Author:** Perestoronin Akim Maksimovich
+1. Инициализировать проекта с помощью npm init.
 
-**Group:** 201-324
+1. Создать основной файл приложения и добавить команду для его запуска в package.json.
 
-**Title:** CAD Programming
+1. С помощью модуля http создать сервер, который в консоль выводит сообщения:
+    * о начале работы и номер порта,
+    * при подключении к нему,
+    * при получении запроса.
+    
+    В качестве ответа отправляется json со статусом 200. В ответе содержится ваше имя, два числа и результаты сложения, вычитания, деления и умножения двух чисел. Числа берутся из параметров URL. Необходимо проверить наличие значений в параметрах и что они являются числами, в случае ошибки отправить ответ со статусом 400 и json с ошибкой и ее описанием.
 
-**Organization:** MPU (Moscow Polytechnic University)
+1. Добавить к проекту файл .gitignore в котором исключить папку node_modules и папки связанные с IDE.
+
+1. Если проект будет выгружаться на Heroku, то необходимо добавить в корень файл Procfile c ```web: команда для запуска```
+
+1. Зафиксировать результаты работы в системе контроля версий на github.
+
+1. Выгрузить работу на сервер или облачный сервис Heroku через подключение репозитория.
+
+## Результаты выполнения лабораторной работы:
+
+Работающий сервер на хостинге или облаке с логикой, которая соответствует требованиям. Код сохранен в системе контроля версий.
+
+## Источники
+
+1. [Официальный сайт Node](https://nodejs.org/en/)
+1. [Введение в Node на английском](https://nodejs.dev/learn)
+1. [Введение в Node на русском](https://nodejsdev.ru/guide/)
+1. [Heroku](https://heroku.com/)
+1. [Руководство по Node на русском (PDF)](https://ruvds.com/img/other/ee86eb4f-db9f-48d3-8094-c76e14414678.pdf)
+1. [Курс по Node](https://habr.com/ru/post/485294/)
