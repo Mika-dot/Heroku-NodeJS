@@ -1,44 +1,38 @@
-﻿**Hello, this repository was created for the purpose of completing an assignment on the subject “Web”.**
+# Лабораторная работа №8
 
-**Directory structure**
+Получение данных из формы
 
-The task was to deploy applications based on herokuapp. The site should include the following aspects.Страницу регистрации / входа
+**Цель**: изучить работу с получением данных из формы.
 
-- Main page of the site*Она должна включать.*
-  - Search engine
-  - Filters for maps
-    - *Custom Article Cards.*
-    - Context with a short description
-    - Picture
-    - Full name of the author
-- Personal Area
-  - Similar to the “Main Page” except for automatic filtering by the author of the account owner.
-  - Ability to create new maps.
-  - Ability to change existing
-- Card Page
-  - *It should include.*
-  - Pictures
-  - Text “main”
-  - Author
-  - Etc
+## Содержание и порядок выполнения лабораторной работы:
 
-**Project Description**
+1. Согласно схеме данных и макету разработанных в 5-й работе сверстать форму.
 
-Buildings under the teacher in the course “Web and DB”. It pursues the goal of studying the principles of operation of sites similar to
+1. Используя fetch, FormData и конечную точку (endpoint), созданную для добавления записи, организовать отправку данных на сервер.
 
-1. [instructables](https://www.instructables.com/)
-1. [thingiverse](https://www.thingiverse.com/)
-1. [grabcad](https://grabcad.com/library)
+1. На стороне сервера добавить использование промежуточного ПО (middleware) multer и cors.
 
-|![Instructables](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.001.png)|![Thingiverse - Apps on Google Play](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.002.png)|![GrabCAD - Wikipedia](https://github.com/Mika-dot/Heroku-NodeJS/blob/main/RAdministrative/Aspose.Words.34c6d12c-2c18-44d3-9f55-1313a8794eae.003.jpeg)|
-| :-: | :-: | :-: |
+1. Для multer создать diskStorage с destination и filename.
 
-**About the author**
+1. Для валидации файлов создать fileFilter.
 
-**Author:** Perestoronin Akim Maksimovich
+1. Провести валидацию входящих данных. При возникновении ошибки в качестве ответа вернуть json со статусом и текстом ошибки.
 
-**Group:** 201-324
+1. В случае успешной проверки, вывести объект с данными в консоль и в качестве ответа вернуть json с положительным статусом.
 
-**Title:** CAD Programming
+1. Файлы должны сохранятся в папке для статического контента, а в объекте отображаться путь до сохраненного ресурса.
 
-**Organization:** MPU (Moscow Polytechnic University)
+1. Зафиксировать результаты работы в системе контроля версий на github.
+
+## Результаты выполнения лабораторной работы:
+
+Работающий сервер на локальной машине с логикой, которая соответствует требованиям. Код сохранен в системе контроля версий.
+
+## Источники
+
+1. [Express Middleware](https://expressjs.com/en/resources/middleware.html)
+1. [Учебник Express часть 6: Работа с формами](https://developer.mozilla.org/ru/docs/Learn/Server-side/Express_Nodejs/forms)
+1. [Начало работы с Express](https://metanit.com/web/nodejs/4.1.php)
+1. [How To Upload Images with a Node.js Backend in Multer and Express](https://www.digitalocean.com/community/tutorials/nodejs-uploading-files-multer-express)
+1. [How To Add Advanced Photo Uploads in Node and Express](https://www.digitalocean.com/community/tutorials/how-to-add-advanced-photo-uploads-in-node-and-express)
+1. [NodeJS + Express](https://dev.to/ericchapman/nodejs-express-part-1-introduction-314a)
