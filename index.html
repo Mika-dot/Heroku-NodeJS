@@ -1,20 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru-RU">
 
 <head>
-<meta charset="utf-8" />
-<title>METANIT.COM</title>
+    <meta charset="UTF-8">
+    <title>Лабы 10-12</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css" />
 </head>
 
 <body>
-<div id="container">
-<form id="myform">
-<label>Цифра один:<input type="number" name="first_namber" id="myform_first_namber" /></label>
-<label>Цифра два:<input type="number" name="last_namber" id="myform_last_namber" /></label>
-<input type=submit>
-</form>
-</div>
+    <header>
+        <div>
+            <button type="button" class="btn btn-info" style="margin: 10px 10px;"
+                onclick="location.href='/'">Назад</button>
+        </div>
+        <div id="Header">
+            <button type="button" class="btn btn-info" style="margin: 10px 10px"
+                onclick="location.href='/reg'">Регистрация</button>
+        </div>
+    </header>
+    <script>
+        let head = document.getElementById("Header");
+        let uuid = localStorage.getItem('sess_id');
+        if (uuid == undefined) uuid = 0;
+        console.log(uuid);
+        if (uuid != 0) {
+            let request = new XMLHttpRequest();
+            request.open("post", "/users/check1", true);
+            let user = JSON.stringify({ UUID: uuid });
+            request.setRequestHeader("Content-Type", "application/json");
+            request.addEventListener("load", function () {
+                let receivedUser = JSON.parse(request.response);
+                console.log("ответ От check1: " + request.response);
+                let S = receivedUser.status;
+                if (S == 0) {
+                    //успешно получен ид
+                    console.log("получили ID: " + receivedUser.data[0].ID);
+                    head.insertAdjacentHTML('afterBegin', `<button type="button" class="btn btn-info" style="margin: 10px 10px" onclick="location.href='/users/` + receivedUser.data[0].ID + `/view'">` + receivedUser.data[0].Name + `</button>`);
+                    head.insertAdjacentHTML('afterBegin', `<img src="/UsersLogo/` + receivedUser.data[0].ID + `" width="40px" height="40px" style="align-self: center;" alt="UserPhotoSmall" onerror="ImgReload()" id="PhotoSmall">`)
+                }
+                else {
+                    localStorage.setItem('sess_id', 0);//раз значение сессии не найдено (мб оно стерлось за это время), то вообще сбрасываем до 0.
+                    head.insertAdjacentHTML('afterBegin', `<button type="button" class="btn btn-info" style="margin: 10px 10px" onclick="location.href='/login'">Войти</button>`);
+                }
+            });
+            console.log(user);
+            request.send(user);
+        }
+        else {
+            head.insertAdjacentHTML('afterBegin', `<button type="button" class="btn btn-info" style="margin: 10px 10px" onclick="location.href='/login'">Войти</button>`);
+        }
+    </script>
+    <main>
+        <h1 style="text-align: center">Добро пожаловать!</h1>
+        <h2 style="text-align: center">К нам уже присоединились:</h2>
+        <div id="UsersList">
+        </div>
+        <hr>
+        <h2 style="text-align: center">Самые популярные модели:</h2>
+        <div id="ModelsList" style="display: flex; flex-wrap: wrap;">
+        </div>
+    </main>
+    <script>
+        let list = document.getElementById("UsersList");
+        let r = fetch('http://localhost:3000/users/all');
+        let rr = r.then((res) => { console.log(res); return res.json(); });
+        rr.then((data) => {
+            console.log(data);
+            console.log(data.data.length);
+            if (data.status == 0) {
+                for (let i = 0; i < data.data.length; i++)
+                    list.insertAdjacentHTML('beforeend', "<div class=\"card\"><div class=\"cardin\"><div><p class=\"card_client_title\">" + data.data[i].Name + "</p><p class=\"card_client_mail\">" + data.data[i].Email + "</p></div><div style=\"margin: 10px;\"><button type=\"button\" class=\"btn btn-info\" onclick=\"location.href='/users/" + data.data[i].ID + "/view'\">Посмотреть профиль</button></div></div></div>");
+            }
+        });
+        function ImgReload() { document.getElementById("Photo").src = "/ModelsLogo/empty.png"; }
+        let r2 = fetch('http://localhost:3000/cards/all');
+        let rr2 = r2.then((res) => { console.log(res); return res.json(); });
+        rr2.then((data) => {
+            console.log(data);
+            console.log(data.data.length);
+            let list = document.getElementById("ModelsList");
+            for (let i = 0; i < data.data.length; i++) {
+                list.insertAdjacentHTML('beforeend',
+                    `<div class=card2 onclick="location.href='/cards/` + data.data[i].ID + `/view'">
+                        <img src="/ModelsLogo/` + data.data[i].ID + `.png" width="290px" height="290px" alt="UserPhoto" onerror="ImgReload()" id="Photo">
+                        <p class=card_client_title>` + data.data[i].Name + `</p>
+                        <p class="card_client_mail">` + data.data[i].SmallText + `</p>
+                    </div>`);
+            }
+        });
 
+
+    </script>
 </body>
 
 </html>

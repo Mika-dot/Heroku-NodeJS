@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+
+<body>
+    <form style="width: 450px; margin: 0 auto;" id="SendForm">
+        <h5 id="NameL">Редактирование: ...</h5>
+        <div class="formel">
+            <label for="Name">Наименование*</label>
+            <input type="text" class="form-control" id="Name" name="Name" placeholder="Введите имя карточки"
+                minlength="9" maxlength="50" required>
+        </div>
+        <div class="formel">
+            <label for="TextS">Краткое описание*</label>
+            <textarea type="text" class="form-control" id="TextS" name="TextS" placeholder="Хоть какое-нибудь"
+                minlength="10" maxlength="150" required></textarea>
+        </div>
+        <div class="formel">
+            <label for="Text">Описание</label>
+            <textarea class="form-control" id="Text" name="Text" maxlength="1500"
+                placeholder="Впишите всё, что есть"></textarea>
+        </div>
+        <div class="formel" style="display: flex;justify-content: space-between;">
+            <button type="button" class="btn btn-info" onclick="location.href='/'">Назад</button>
+            <button type="submit" class="btn btn-info" id="Send">Применить</button>
+        </div>
+    </form>
+    <script>
+
+        let url = window.location.href;
+        let ID = 0;
+        console.log(url.replace("/edit", "/"));
+        let r = fetch(url.replace("/edit", "/"));
+        let rr = r.then((res) => { console.log(res); return res.json(); });
+        rr.then((data) => {
+            console.log(data);
+            console.log(data.data.length);
+            ID = data.data[0].ID;
+            document.getElementById("NameL").textContent = "Редактирование: " + data.data[0].Name + " [" + ID + "]";
+            document.getElementById("Name").value = data.data[0].Name;
+            document.getElementById("TextS").textContent = data.data[0].SmallText;
+            document.getElementById("Text").value = data.data[0].FullText;
+        });
+
+        document.getElementById("Send").addEventListener("click", function (e) {
+            if (document.getElementById("Name").validity.valid
+                && document.getElementById("Text").validity.valid
+                && document.getElementById("TextS").validity.valid
+            ) {
+                //  method="POST" enctype="multipart/form-data"
+
+                let registerForm = document.forms["SendForm"];
+
+                let Name = registerForm.elements["Name"].value;
+                let Text = registerForm.elements["Text"].value;
+                let TextS = registerForm.elements["TextS"].value;
+
+                let user = JSON.stringify({ ID: ID, Name: Name, Text: Text, TextS: TextS, UUID: localStorage.getItem('sess_id') });
+                let request = new XMLHttpRequest();
+                request.open("put", "/cards/" + ID, true);
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    let receivedUser = JSON.parse(request.response);
+                    console.log("ответ: " + request.response);
+                    let S = receivedUser.status;
+                    if (S == 0) {
+                        //успешно отправлено
+                        window.location = '/';
+                    }
+                    else {
+                        if (S == 255) console.log("Неизвестная ошибка при отправке.");
+                        if (S == 1) console.log("Ошибка в базе данных.");
+                    }
+                });
+                console.log(user);
+                request.send(user);
+                e.preventDefault();
+
+
+
+
+
+
+/*
+                e.preventDefault();
+                let registerForm = document.forms["SendForm"];
+                const formData = new FormData(registerForm);
+                formData.append("UUID", localStorage.getItem('sess_id'));
+                const xhr = new XMLHttpRequest();
+                xhr.onload = () => {
+                    let RESS = JSON.parse(xhr.response);
+                    console.log(RESS);
+                    let S = RESS.status;
+                    console.log(S);
+                    if (S == 0) {
+                        //успешно отправлено
+                        window.location = '/';
+                    }
+                    else {
+                        if (S == 255) console.log("Неизвестная ошибка при отправке.");
+                        if (S == 1) console.log("Ошибка в базе данных.");
+                    }
+                };
+                xhr.open('PUT', "/cards/" + ID);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(formData);
+                */
+            }
+        });
+    </script>
+</body>
+
+</html>

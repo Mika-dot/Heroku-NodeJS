@@ -1,36 +1,33 @@
-const http = require("http");
-const fs = require("fs");
+const express = require('express');
+const app = express();
 
-http.createServer(async (request, response) => {
+app.use(express.static(__dirname + '/styles'));
+app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/three.js-master'));
+app.use('/three.js-master', express.static(__dirname + '/three.js-master'));
 
-    let options = request.url.split(/first_namber=|&last_namber=/);
+app.listen(3000, () => {
+  console.log('Сервер запущен по адресу http://localhost:3000');
+});
 
-    console.log("------------------------------------------");
-    console.log(options[1]);
-    console.log(options[2]);
-    console.log("------------------------------------------");
+app.get('/', (req, res) => {
+  console.log("=== Просто так, " + new Date() + " ===");
+  res.sendFile(__dirname + '\\index.html');
+});
+app.get('/login', (req, res) => {
+  console.log("=== Страница входа, " + new Date() + " ===");
+  res.sendFile(__dirname + '\\login.html');
+});
+app.get('/reg', (req, res) => {
+  console.log("=== Страница регистрации, " + new Date() + " ===");
+  res.sendFile(__dirname + '\\reg.html');
+});
+app.get('/add_card', (req, res) => {
+  console.log("=== Страница добавления карточки, " + new Date() + " ===");
+  res.sendFile(__dirname + '\\add.html');
+});
 
-    if (options[0] == '/?') {
-
-        console.log(Number(options[1]) + Number(options[2]));
-
-        response.writeHead(200, {'Content-Type': 'application/json'});
-
-        let json = {
-            name: 'Akim',
-            number1: options[1],
-            number2: options[2],
-            sum: Number(options[1]) + Number(options[2]),
-            minus: Number(options[1]) - Number(options[2]),
-            multiply: Number(options[1]) * Number(options[2]),
-            div: Number(options[1]) / Number(options[2])
-        };
-
-        response.end(JSON.stringify(json));
-
-    }
-    else {
-        fs.readFile("index.html", (error, data) => response.end(data));
-    }
-
-}).listen(3000, () => console.log("Сервер запущен по адресу http://localhost:3000"));
+const users = require('./users');
+app.use('/users', users);
+const cards = require('./cards');
+app.use('/cards', cards);
