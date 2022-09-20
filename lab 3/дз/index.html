@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+            .modalWindowS {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+		
+		        .modal {
+            background-color: white;
+            width: 350px;
+            height: 370px;
+            margin: auto;
+            border-style: solid;
+        }
+		.FormS {
+		margin: 0 50px
+		}
+		
+		        input {
+            border-style: double;
+        }
+
+        input:invalid {
+            border-color: #FFFF00;
+            box-shadow: 0 0 5px 1px #FFFF00;
+        }
+
+        input:invalid:required {
+            border-color: #FFFF00;
+            box-shadow: 0 0 5px 1px #FFFF00;
+        }
+		
+		
+    </style>
+</head>
+
+<body>
+    <h1>Модальном окно</h1>
+
+    <button id="myBtn">Открыть модальное окно</button>
+
+<div id="modalWindow" class="modalWindowS">
+        <div class="modal">
+            <form id="Form" class="FormS">
+                <p>Ваше имя*</p>
+                <input type="text" id="forename" required minlength="2" maxlength="50" />
+                <p>Электронная почта*</p>
+                <input type="email" id="post" required minlength="5" maxlength="50"/>
+                <p>Оценка</p>
+                <input type="radio" name="ticket" id="ticket1" required />
+                <label for="ticket1">плохо</label>
+                <input type="radio" name="ticket" id="ticket2" required />
+                <label for="ticket2">нормально</label>
+				<input type="radio" name="ticket" id="ticket3" required />
+                <label for="ticket3">хорошо</label>
+				<input type="radio" name="ticket" id="ticket4" required />
+                <label for="ticket4">отлично</label>
+                <p><button id="modalClose">Закрыть</button></p>
+                <p><input id="closeF" type="submit" /></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+	
+	let ModalObj = document.getElementById("modalWindow");
+        let ModalFClose = function (e) {
+            document.body.style.overflow = 'visible';
+            ModalObj.style.display = "none";
+            return false;
+        }
+        ModalFClose();
+        ModalObj.onclick = function (e) {
+            if (e && e.target == ModalObj) {
+                document.body.style.overflow = 'visible';
+                ModalObj.style.display = "none";
+                return false;
+            }
+        };
+        document.getElementById("modalClose").onclick = ModalFClose;
+		
+        document.getElementById("myBtn").onclick = function () {
+            ModalObj.style.display = "block";
+		document.body.style.overflow = 'hidden';
+        };
+		
+        document.getElementById("forename").onblur = function (e) {
+            let text = document.getElementById("forename");
+            let check = text.validity;
+            if (check.typeMismatch) text.setCustomValidity("Неправильный тип имени");
+            //if (check.valueMissing) text.setCustomValidity("Заполните свое имя");
+        }
+        document.getElementById("post").onblur = function (e) {
+            let text = document.getElementById("post");
+            let check = text.validity;
+			if (check.valueMissing) text.setCustomValidity("Заполните свою почту");
+            if((text.includes('@') != true) && (text.includes('.') != true)){
+				text.setCustomValidity("Неправильный тип электронной почты");
+                
+            }
+
+        };
+	    document.getElementById("closeF").onclick = function (e) {
+            if (document.getElementById("forename").validity.valid
+                && document.getElementById("post").validity.valid
+                && (document.getElementById("ticket1").validity.valid || 
+					document.getElementById("ticket1").validity.valid || 
+					document.getElementById("ticket1").validity.valid ||
+					document.getElementById("ticket1").validity.valid)){
+					
+                let objs = {
+                    forename: document.getElementById("forename").value,
+                    post: document.getElementById("post").value,
+                    type1: document.getElementById("ticket1").checked,
+					type2: document.getElementById("ticket2").checked,
+					type3: document.getElementById("ticket3").checked,
+					type4: document.getElementById("ticket4").checked
+                };//, , , };
+            console.table(objs);
+            //return false;
+            }
+document.body.style.overflow = 'visible';
+            ModalObj.style.display = "none";
+            return false;
+        };
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

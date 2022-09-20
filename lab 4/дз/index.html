@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+ </head>
+ <body style="margin:0">
+    <input type="button" id="APIbutt" value="Отправить">
+
+    <script>
+
+        document.getElementById("APIbutt").onclick = function() {
+            let text = fetch('https://the-dune-api.herokuapp.com/quotes/4').then((res) => { return res.json(); });
+            text.then((data) => {
+            	document.write("<p>Цитаты</p>")
+            	for (let i = 0; i < data.length; i++){
+                	document.write("<p style=\"border: 1px solid red; padding: 5px;\">" + (i + 1) + ": " + data[i].quote + "</p>")
+		}
+            });
+            fetch('https://the-dune-api.herokuapp.com/quotes/4').catch((e) => {alert("Ошибка"); });
+        }  
+
+    </script>
+  </body>
+</html>
