@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Модальный (фон) */
+.modal {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed; /* Оставаться на месте */
+  z-index: 1; /* Сидеть на вершине */
+  padding-top: 100px; /* Расположение коробки */
+  left: 0;
+  top: 0;
+  width: 100%; /* Полная ширина */
+  height: 100%; /* Полная высота */
+  overflow: auto; /* Включите прокрутку, если это необходимо */
+  background-color: rgb(0,0,0); /* Цвет запасной вариант  */
+  background-color: rgba(0,0,0,0.4); /*Черный с непрозрачностью */
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<h1>Модальном окно</h1>
+
+<button id="myBtn">Открыть модальном окно</button>
+
+<div id="myModal" class="modal">
+
+  <div class="modal-content">   
+    <form name="form" action="mail.php" method="post" id="form_message">
+		<h2>Форма обратной связи.</h2>
+
+		<p> <div>Ваше имя</div> <input id="fullName"name="name" type="text"/> </p>		 
+		<p> <div>Электронная почта</div> <input id="email"name="email" type="text"/> </p>
+		 
+        <div>
+            <input type="radio" id="Poorly" name="contact">
+            <label for="Poorly">плохо</label>
+        
+            <input type="radio" id="Fine" name="contact">
+            <label for="Fine">нормально</label>
+        
+            <input type="radio" id="Okay" name="contact">
+            <label for="Okay">хорошо</label>
+
+            <input type="radio" id="Great" name="contact">
+           <label for="Great">отлично</label>
+        </div>
+
+		<button id="Save">сохранить</button>
+
+	</form>
+  </div>
+
+</div>
+
+<script>
+// Получить модальное
+let modal = document.getElementById("myModal");
+
+// Получить кнопку, которая открывает модальное
+let btn = document.getElementById("myBtn");
+
+let fullName = document.getElementById('fullName');
+let email = document.getElementById('email');
+
+// Когда пользователь нажимает кнопку, открывается модальное 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+fullName.onclick = function() {
+    console.log(document.getElementById('fullName').value);
+}
+email.onclick = function() {
+    console.log(document.getElementById('email').value);
+}
+
+// Когда пользователь щелкает в любом месте за пределами модального окна, закройте его.
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function Save() {
+
+  if (document.getElementById('fullName').value !== "string") {
+    alert("не тот тип");
+  }
+  if (document.getElementById('email').value.includes('@') != false) {
+    alert("не почта");
+  }
+} 
+
+
+
+</script>
+
+</body>
+</html>
+
